@@ -4,6 +4,8 @@ import (
 	"github/com/jorgeAM/goFireAuth/internal/platform/http/handler"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )

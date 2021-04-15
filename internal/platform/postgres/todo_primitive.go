@@ -6,14 +6,14 @@ import (
 )
 
 type Todo struct {
-	id          string
-	title       string
-	description string
-	createdAt   time.Time
+	ID          string
+	Title       string
+	Description string
+	CreatedAt   time.Time
 }
 
 func (t Todo) UnmarshalAggregate() (*domain.Todo, error) {
-	todo, err := domain.NewTodo(t.id, t.title, t.description, t.createdAt)
+	todo, err := domain.NewTodo(t.ID, t.Title, t.Description, t.CreatedAt)
 
 	if err != nil {
 		return nil, err
