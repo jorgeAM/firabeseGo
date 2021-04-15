@@ -1,4 +1,4 @@
-package todo
+package domain
 
 import (
 	"github/com/jorgeAM/goFireAuth/kit"
@@ -12,7 +12,7 @@ type Todo struct {
 	CreatedAt   time.Time
 }
 
-func NewTodo(id, title, description string) (*Todo, error) {
+func NewTodo(id, title, description string, createdAt time.Time) (*Todo, error) {
 	idVO, err := kit.NewId(id)
 
 	if err != nil {
@@ -23,7 +23,7 @@ func NewTodo(id, title, description string) (*Todo, error) {
 		ID:          idVO,
 		Title:       title,
 		Description: description,
-		CreatedAt:   time.Now(),
+		CreatedAt:   createdAt,
 	}, nil
 
 }
