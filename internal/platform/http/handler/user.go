@@ -17,15 +17,18 @@ type signUpRequest struct {
 func (h *Handler) SignUp(c *fiber.Ctx) error {
 	var req signUpRequest
 
-	err := c.BodyParser(&req)
-
-	if err != nil {
+	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"message": "something got wrong to parse request body"})
 	}
 
-	fmt.Println("should not print")
+	errors := h.ValidateRequest(req)
 
-	err = h.userCreator.Create(c.Context(), req.FirstName, req.LastName, req.Email, req.Password)
+	if errors != nil {
+		fmt.Println("GG WP")
+		return c.JSON(fiber.Map{"errors": errors})
+	}
+
+	err := h.userCreator.Create(c.Context(), req.FirstName, req.LastName, req.Email, req.Password)
 
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"message": err.Error()})
