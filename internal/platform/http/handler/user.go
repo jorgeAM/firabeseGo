@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -24,8 +23,7 @@ func (h *Handler) SignUp(c *fiber.Ctx) error {
 	errors := h.ValidateRequest(req)
 
 	if errors != nil {
-		fmt.Println("GG WP")
-		return c.JSON(fiber.Map{"errors": errors})
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"errors": errors})
 	}
 
 	err := h.userCreator.Create(c.Context(), req.FirstName, req.LastName, req.Email, req.Password)
