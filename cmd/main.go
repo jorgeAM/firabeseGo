@@ -4,7 +4,8 @@ import (
 	"github/com/jorgeAM/goFireAuth/internal/platform/http"
 	"github/com/jorgeAM/goFireAuth/internal/platform/http/handler"
 	"github/com/jorgeAM/goFireAuth/internal/platform/postgres"
-	"github/com/jorgeAM/goFireAuth/internal/todo/application"
+	todoApplication "github/com/jorgeAM/goFireAuth/internal/todo/application"
+	userApplication "github/com/jorgeAM/goFireAuth/internal/user/application"
 	"log"
 	"os"
 
@@ -23,12 +24,14 @@ func main() {
 
 	db := pg.Connect(opt)
 
-	todoRepository := postgres.NewRepository(db)
+	todoRepository := postgres.NewTodoRepository(db)
+	userRepository := postgres.NewUserRepository(db)
 
-	todoCreator := application.NewTodoCreator(todoRepository)
-	todoReader := application.NewTodoReader(todoRepository)
+	todoCreator := todoApplication.NewTodoCreator(todoRepository)
+	todoReader := todoApplication.NewTodoReader(todoRepository)
+	userCreator := userApplication.NewUserCreator(userRepository)
 
-	handler := handler.NewHandler(todoCreator, todoReader)
+	handler := handler.NewHandler(todoCreator, todoReader, userCreator)
 
 	srv := http.NewServer(handler)
 

@@ -26,7 +26,7 @@ func (h *Handler) CreateTodo(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"message": err.Error()})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "user created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "todo created successfully"})
 }
 
 func (h *Handler) GetTodos(c *fiber.Ctx) error {

@@ -36,6 +36,9 @@ func (s *Server) registerRoutes(handler *handler.Handler) {
 	router := s.engine.Group("/todos")
 	router.Post("", handler.CreateTodo)
 	router.Get("", handler.GetTodos)
+
+	s.engine.Post("/sign-up", handler.SignUp)
+
 }
 
 func (s *Server) Run() error {

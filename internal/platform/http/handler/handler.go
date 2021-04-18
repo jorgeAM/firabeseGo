@@ -1,15 +1,20 @@
 package handler
 
-import "github/com/jorgeAM/goFireAuth/internal/todo/application"
+import (
+	todoApplication "github/com/jorgeAM/goFireAuth/internal/todo/application"
+	userApplication "github/com/jorgeAM/goFireAuth/internal/user/application"
+)
 
 type Handler struct {
-	todoCreator application.TodoCreator
-	todoReader  application.TodoReader
+	todoCreator todoApplication.TodoCreator
+	todoReader  todoApplication.TodoReader
+	userCreator userApplication.UserCreator
 }
 
-func NewHandler(todoCreator application.TodoCreator, todoReader application.TodoReader) *Handler {
+func NewHandler(todoCreator todoApplication.TodoCreator, todoReader todoApplication.TodoReader, userCreator userApplication.UserCreator) *Handler {
 	return &Handler{
 		todoCreator: todoCreator,
 		todoReader:  todoReader,
+		userCreator: userCreator,
 	}
 }

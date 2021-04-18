@@ -9,10 +9,10 @@ import (
 )
 
 type TodoCreator struct {
-	repository domain.Repository
+	repository domain.TodoRepository
 }
 
-func NewTodoCreator(repository domain.Repository) TodoCreator {
+func NewTodoCreator(repository domain.TodoRepository) TodoCreator {
 	return TodoCreator{repository}
 }
 

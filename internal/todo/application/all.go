@@ -6,10 +6,10 @@ import (
 )
 
 type TodoReader struct {
-	repository domain.Repository
+	repository domain.TodoRepository
 }
 
-func NewTodoReader(repository domain.Repository) TodoReader {
+func NewTodoReader(repository domain.TodoRepository) TodoReader {
 	return TodoReader{repository}
 }
 

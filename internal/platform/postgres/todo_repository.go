@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"context"
-	"fmt"
 	"github/com/jorgeAM/goFireAuth/internal/todo/domain"
 
 	"github.com/go-pg/pg/v10"
@@ -12,7 +11,7 @@ type todoRepository struct {
 	db *pg.DB
 }
 
-func NewRepository(db *pg.DB) domain.Repository {
+func NewTodoRepository(db *pg.DB) domain.TodoRepository {
 	return &todoRepository{db}
 }
 
@@ -28,7 +27,6 @@ func (r *todoRepository) NewTodo(ctx context.Context, todo *domain.Todo) error {
 		return err
 	}
 
-	fmt.Println("si todo va bien esto deberias verlo")
 	return nil
 }
 
