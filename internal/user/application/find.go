@@ -2,7 +2,7 @@ package application
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"github/com/jorgeAM/goFireAuth/internal/user/domain"
 )
 
@@ -29,7 +29,9 @@ func (u UserFinder) Find(ctx context.Context, email, password string) (*UserResp
 
 	match := user.PasswordMatch(password)
 
-	fmt.Println("match: ", match)
+	if !match {
+		return nil, errors.New("Credentials are invalid")
+	}
 
 	userRes := newUserResponseFromAggregate(user)
 

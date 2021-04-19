@@ -10,6 +10,7 @@ type UserResponse struct {
 	FirstName string    `json:"firstName"`
 	LastName  string    `json:"LastName"`
 	Email     string    `json:"email"`
+	Token     string    `json:"token"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
