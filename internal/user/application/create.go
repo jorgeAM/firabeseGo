@@ -4,6 +4,7 @@ import (
 	"context"
 	"github/com/jorgeAM/goFireAuth/internal/user/domain"
 	"github/com/jorgeAM/goFireAuth/kit"
+	"time"
 )
 
 type UserCreator struct {
@@ -17,7 +18,13 @@ func NewUserCreator(repository domain.UserRepository) UserCreator {
 func (u UserCreator) Create(ctx context.Context, firstName, lastName, email, password string) error {
 	id := kit.NewID().String()
 
-	user, err := domain.NewUser(id, firstName, lastName, email, password)
+	salt, err := domain.GenerateRandomSalt(domain.DefaultSizeSalt)
+
+	if err != nil {
+		return err
+	}
+
+	user, err := domain.NewUser(id, firstName, lastName, email, password, salt, time.Now())
 
 	if err != nil {
 		return err

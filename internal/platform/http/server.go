@@ -38,6 +38,7 @@ func (s *Server) registerRoutes(handler *handler.Handler) {
 	router.Get("", handler.GetTodos)
 
 	s.engine.Post("/sign-up", handler.SignUp)
+	s.engine.Post("/login", handler.Login)
 
 }
 

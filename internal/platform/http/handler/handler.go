@@ -11,13 +11,15 @@ type Handler struct {
 	todoCreator todoApplication.TodoCreator
 	todoReader  todoApplication.TodoReader
 	userCreator userApplication.UserCreator
+	userFinder  userApplication.UserFinder
 }
 
-func NewHandler(todoCreator todoApplication.TodoCreator, todoReader todoApplication.TodoReader, userCreator userApplication.UserCreator) *Handler {
+func NewHandler(todoCreator todoApplication.TodoCreator, todoReader todoApplication.TodoReader, userCreator userApplication.UserCreator, userFinder userApplication.UserFinder) *Handler {
 	return &Handler{
 		todoCreator: todoCreator,
 		todoReader:  todoReader,
 		userCreator: userCreator,
+		userFinder:  userFinder,
 	}
 }
 

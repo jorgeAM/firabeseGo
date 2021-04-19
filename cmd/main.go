@@ -30,8 +30,9 @@ func main() {
 	todoCreator := todoApplication.NewTodoCreator(todoRepository)
 	todoReader := todoApplication.NewTodoReader(todoRepository)
 	userCreator := userApplication.NewUserCreator(userRepository)
+	userFinder := userApplication.NewUserFinder(userRepository)
 
-	handler := handler.NewHandler(todoCreator, todoReader, userCreator)
+	handler := handler.NewHandler(todoCreator, todoReader, userCreator, userFinder)
 
 	srv := http.NewServer(handler)
 

@@ -34,3 +34,30 @@ func (h *Handler) SignUp(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "user created successfully"})
 }
+
+type logInRequest struct {
+	Email    string `json:"email" validate:"required,email,min=6"`
+	Password string `json:"password" validate:"required,min=6"`
+}
+
+func (h *Handler) Login(c *fiber.Ctx) error {
+	var req logInRequest
+
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"message": "something got wrong to parse request body"})
+	}
+
+	errors := h.ValidateRequest(req)
+
+	if errors != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"errors": errors})
+	}
+
+	user, err := h.userFinder.Find(c.Context(), req.Email, req.Password)
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"message": err.Error()})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{"user": user})
+}

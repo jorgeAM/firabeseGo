@@ -17,7 +17,7 @@ type User struct {
 	CreatedAt time.Time
 }
 
-func NewUser(id, firstName, lastName, email, password string) (*User, error) {
+func NewUser(id, firstName, lastName, email, password string, salt []byte, createdAt time.Time) (*User, error) {
 	idVO, err := kit.NewId(id)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func NewUser(id, firstName, lastName, email, password string) (*User, error) {
 		return nil, err
 	}
 
-	saltVO, err := NewSalt()
+	saltVO, err := NewSalt(salt)
 
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func NewUser(id, firstName, lastName, email, password string) (*User, error) {
 		Email:     emailVO,
 		Password:  passwordVO,
 		Salt:      saltVO,
-		CreatedAt: time.Now(),
+		CreatedAt: createdAt,
 	}, nil
 
 }

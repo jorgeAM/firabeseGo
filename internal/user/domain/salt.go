@@ -2,15 +2,19 @@ package domain
 
 import (
 	"crypto/rand"
+	"errors"
+	"fmt"
 )
 
-const saltSize = 16
+const DefaultSizeSalt = 16
+
+var ErrInvalidSalt = errors.New("invalid salt")
 
 type Salt struct {
 	value []byte
 }
 
-func generateRandomSalt(saltSize int) ([]byte, error) {
+func GenerateRandomSalt(saltSize int) ([]byte, error) {
 	var salt = make([]byte, saltSize)
 
 	_, err := rand.Read(salt[:])
@@ -22,14 +26,12 @@ func generateRandomSalt(saltSize int) ([]byte, error) {
 	return salt, nil
 }
 
-func NewSalt() (Salt, error) {
-	saltBytes, err := generateRandomSalt(saltSize)
-
-	if err != nil {
-		return Salt{}, err
+func NewSalt(value []byte) (Salt, error) {
+	if len(value) != DefaultSizeSalt {
+		return Salt{}, fmt.Errorf("%w: %s", ErrInvalidSalt, value)
 	}
 
-	return Salt{value: saltBytes}, nil
+	return Salt{value}, nil
 }
 
 func (s Salt) ToPrimitive() []byte {

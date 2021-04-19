@@ -32,3 +32,15 @@ func (r *userRepository) Create(ctx context.Context, user *domain.User) error {
 
 	return nil
 }
+
+func (r *userRepository) FindByEmail(ctx context.Context, email domain.Email) (*domain.User, error) {
+	user := new(User)
+
+	err := r.db.ModelContext(ctx, user).Where("email = ?", email.String()).Limit(1).Select()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user.UnmarshalAggregate()
+}

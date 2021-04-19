@@ -18,7 +18,7 @@ type User struct {
 }
 
 func (u User) UnmarshalAggregate() (*domain.User, error) {
-	user, err := domain.NewUser(u.ID, u.FirstName, u.LastName, u.Email, u.Password)
+	user, err := domain.NewUser(u.ID, u.FirstName, u.LastName, u.Email, u.Password, u.Salt, u.CreatedAt)
 
 	if err != nil {
 		return nil, err
