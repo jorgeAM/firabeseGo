@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"errors"
+	"github/com/jorgeAM/goFireAuth/internal/platform/auth"
 	"github/com/jorgeAM/goFireAuth/internal/user/domain"
 )
 
@@ -33,7 +34,13 @@ func (u UserFinder) Find(ctx context.Context, email, password string) (*UserResp
 		return nil, errors.New("Credentials are invalid")
 	}
 
-	userRes := newUserResponseFromAggregate(user)
+	jwt, err := auth.GenerateToken(user)
+
+	if err != nil {
+		return nil, err
+	}
+
+	userRes := newUserResponseFromAggregate(user, jwt)
 
 	return userRes, nil
 }
