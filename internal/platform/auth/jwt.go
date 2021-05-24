@@ -20,7 +20,6 @@ func GenerateToken(user *domain.User) (string, error) {
 
 	claims := map[string]interface{}{
 		"displayName": user.FirstName.String() + user.LastName.String(),
-		"email":       user.Email.String(),
 	}
 
 	token, err := authClient.CustomTokenWithClaims(context.Background(), user.ID.String(), claims)
