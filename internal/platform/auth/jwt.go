@@ -1,39 +1,33 @@
 package auth
 
 import (
+	"context"
 	"os"
-	"time"
 
 	_ "github.com/joho/godotenv/autoload"
 
 	"github/com/jorgeAM/goFireAuth/internal/user/domain"
-
-	"github.com/dgrijalva/jwt-go"
 )
 
 var jwtSecret = os.Getenv("JWT_SECRET")
 
 func GenerateToken(user *domain.User) (string, error) {
-	displayName := user.FirstName.String() + user.LastName.String()
-
-	claim := Claim{
-		ID:          user.ID.String(),
-		DisplayName: displayName,
-		Email:       user.Email.String(),
-		StandardClaims: jwt.StandardClaims{
-			Issuer:    "go-firebase",
-			IssuedAt:  time.Now().Unix(),
-			ExpiresAt: time.Now().Add(8 * time.Hour).Unix(),
-		},
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-
-	jwt, err := token.SignedString([]byte(jwtSecret))
+	authClient, err := SetupFirebase()
 
 	if err != nil {
 		return "", err
 	}
 
-	return jwt, nil
+	claims := map[string]interface{}{
+		"displayName": user.FirstName.String() + user.LastName.String(),
+		"email":       user.Email.String(),
+	}
+
+	token, err := authClient.CustomTokenWithClaims(context.Background(), user.ID.String(), claims)
+
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }

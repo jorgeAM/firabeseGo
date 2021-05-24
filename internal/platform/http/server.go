@@ -7,6 +7,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
@@ -23,6 +24,7 @@ func NewServer(handler *handler.Handler) *Server {
 		port:   ":" + port,
 	}
 
+	srv.engine.Use(cors.New())
 	srv.engine.Use(logger.New())
 
 	srv.registerRoutes(handler)
