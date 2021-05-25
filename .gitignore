@@ -1,4 +1,5 @@
 vendor
+web/node_modules
 
 tmp
 bin
