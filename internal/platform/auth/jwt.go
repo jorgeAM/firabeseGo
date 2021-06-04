@@ -2,14 +2,11 @@ package auth
 
 import (
 	"context"
-	"os"
 
 	_ "github.com/joho/godotenv/autoload"
 
 	"github/com/jorgeAM/goFireAuth/internal/user/domain"
 )
-
-var jwtSecret = os.Getenv("JWT_SECRET")
 
 func GenerateToken(user *domain.User) (string, error) {
 	authClient, err := SetupFirebase()

@@ -5,3 +5,4 @@ tmp
 bin
 
 .env
+service-account-key.json

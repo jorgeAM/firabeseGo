@@ -6,7 +6,6 @@ require (
 	cloud.google.com/go/firestore v1.5.0 // indirect
 	cloud.google.com/go/storage v1.14.0 // indirect
 	firebase.google.com/go v3.13.0+incompatible
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-pg/pg/v10 v10.9.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gofiber/fiber/v2 v2.7.1
